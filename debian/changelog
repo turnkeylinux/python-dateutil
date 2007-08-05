@@ -1,3 +1,9 @@
+python-dateutil (1.2-1) unstable; urgency=low
+
+  * New Upstream Version
+
+ -- Guido Guenther <agx@sigxcpu.org>  Sun, 05 Aug 2007 14:35:21 +0200
+
 python-dateutil (1.1-1) unstable; urgency=low
 
   * new upstream version
