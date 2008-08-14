@@ -1,3 +1,10 @@
+python-dateutil (1.4.1-1) unstable; urgency=low
+
+  * [292923b] New Upstream version 1.4.1
+  * [abd914e] uscan: justs downloading is enough
+
+ -- Guido Guenther <agx@sigxcpu.org>  Thu, 14 Aug 2008 08:44:02 +0200
+
 python-dateutil (1.4-1) unstable; urgency=low
 
   * new upstream version
