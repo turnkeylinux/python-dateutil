@@ -1,3 +1,11 @@
+python-dateutil (1.4.1-2) unstable; urgency=low
+
+  * [a5de481] don't ship timezone information (Closes: #416204)
+  * [4f4aa5d] add README.source
+  * [174ea3e] bump standards version
+
+ -- Guido Guenther <agx@sigxcpu.org>  Tue, 30 Sep 2008 18:49:25 +0200
+
 python-dateutil (1.4.1-1) unstable; urgency=low
 
   * [292923b] New Upstream version 1.4.1
