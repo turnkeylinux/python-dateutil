@@ -10,7 +10,7 @@ XS-Vcs-Browser: http://git.debian.org/?p=calendarserver/python-dateutil.git
 
 Package: python-dateutil
 Architecture: all
-Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}, tzdata
 Description: powerful extensions to the standard datetime module
  It features:
  .
@@ -25,7 +25,6 @@ Description: powerful extensions to the standard datetime module
     known formats), iCalendar format files, given ranges (with help from
     relative deltas), local machine timezone, fixed offset timezone, UTC
     timezone
-  * internal up-to-date world timezone information based on Olson's database.
   * computing of Easter Sunday dates for any given year, using Western, Orthodox
     or Julian algorithms
 
