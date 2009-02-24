@@ -1,3 +1,11 @@
+python-dateutil (1.4.1-3) unstable; urgency=low
+
+  * [95a66ef] depend on tzdata and update description
+  * [93fe8b9] don't depend on pysupport internals (Closes: #516907) -
+    thanks to Josselin Mouette for pointing this out and providing a fix
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 24 Feb 2009 22:30:33 +0100
+
 python-dateutil (1.4.1-2) unstable; urgency=low
 
   * [a5de481] don't ship timezone information (Closes: #416204)
