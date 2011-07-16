@@ -1,7 +1,7 @@
 Source: python-dateutil
 Section: python
 Priority: optional
-Maintainer: Guido Guenther <agx@sigxcpu.org>
+Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends: cdbs (>= 0.4.90~), debhelper (>= 5), quilt, python-all (>= 2.6.6-3~), python-setuptools
 Standards-Version: 3.9.2
 XS-Vcs-Git: git://git.debian.org/git/calendarserver/python-dateutil.git
