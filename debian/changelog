@@ -1,3 +1,14 @@
+python-dateutil (1.4.1-4~1.gbp1cda49) UNRELEASED; urgency=low
+
+  ** SNAPSHOT build @1cda49328c0b31c07b485589d016e8168cca408a **
+
+  [ Barry Warsaw ]
+  * [1cda493] Switch to dh_python2 (Closes: #633888) (LP: #788514)
+
+  [ Guido Günther ]
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 16 Jul 2011 20:56:23 +0200
+
 python-dateutil (1.4.1-3) unstable; urgency=low
 
   * [95a66ef] depend on tzdata and update description

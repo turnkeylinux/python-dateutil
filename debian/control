@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Guido Guenther <agx@sigxcpu.org>
 Build-Depends: cdbs (>= 0.4.90~), debhelper (>= 5), quilt, python-all-dev (>= 2.6.6-3~), python-setuptools
-Standards-Version: 3.8.0
+Standards-Version: 3.9.2
 XS-Vcs-Git: git://git.debian.org/git/calendarserver/python-dateutil.git
 XS-Vcs-Browser: http://git.debian.org/?p=calendarserver/python-dateutil.git
 X-Python-Version: >= 2.3
