@@ -1,13 +1,11 @@
 #!/usr/bin/make -f
-  
-DEB_TAR_SRCDIR                  := python-dateutil
-DEB_AUTO_CLEANUP_RCS            := yes
 
-DEB_PYTHON_CLEAN_ARGS = --all
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/python-distutils.mk
-include /usr/share/cdbs/1/rules/patchsys-quilt.mk
+%:
+	dh $@ --with python2
 
-install/python-dateutil::
+override_dh_auto_install:
+	dh_auto_install $@
 	rm -f debian/python-dateutil/usr/lib/`pyversions -d`/site-packages/dateutil/zoneinfo/zoneinfo-*.tar.gz
