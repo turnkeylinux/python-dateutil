@@ -1,0 +1,24 @@
+From: =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+Date: Tue, 30 Aug 2011 22:16:13 +0200
+Subject: Use C locale when calling date.
+
+Last-Update: 2011-08-16
+Forwarded: no
+---
+ example.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/example.py b/example.py
+index f5a8e6f..0a1ef7c 100644
+--- a/example.py
++++ b/example.py
+@@ -5,7 +5,7 @@ from dateutil.parser import *
+ from datetime import *
+ import commands
+ import os
+-now = parse(commands.getoutput("date"))
++now = parse(commands.getoutput("LC_ALL=C date"))
+ today = now.date()
+ year = rrule(YEARLY,bymonth=8,bymonthday=13,byweekday=FR)[0].year
+ rdelta = relativedelta(easter(year), today)
+-- 
