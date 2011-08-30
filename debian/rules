@@ -9,3 +9,6 @@
 override_dh_auto_install:
 	dh_auto_install $@
 	rm -f debian/python-dateutil/usr/lib/`pyversions -d`/site-packages/dateutil/zoneinfo/zoneinfo-*.tar.gz
+
+override_dh_auto_test:
+	python test.py
