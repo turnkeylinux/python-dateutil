@@ -1,3 +1,29 @@
+python-dateutil (1.5+dfsg-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Repack upstream tarball to remove non-free time zone information
+    (sourceless binary data) (Closes: #665894)
+  * Remove reference to dateutil/zoneinfo/zoneinfo-2010g.tar.gz from both
+    upstream build system and debian/rules
+    - The file was not shipped in the binary, so there's no impact on the
+      functionality of the package
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 06 Jul 2012 09:00:45 -0400
+
+python-dateutil (1.5-1) unstable; urgency=low
+
+  [ Guido Günther ]
+  * [5e8a55e] New upstream version 1.5
+  * [ac4e883] Switch to 3.0 (quilt) source format (Closes: #637992)
+    Thanks to Fladischer Michael for the patch
+  * [07b2b97] Turn into quilt patch
+  * [8eac570] Activate tests
+
+  [ Fladischer Michael ]
+  * [eda9261] Remove XS-* from VCS fields
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 30 Aug 2011 22:20:22 +0200
+
 python-dateutil (1.4.1-4) unstable; urgency=low
 
   [ Barry Warsaw ]
