@@ -1,3 +1,11 @@
+python-dateutil (1.5-2) unstable; urgency=medium
+
+  [ Jean-Baptiste Lallement ]
+  * [cddbc8b] Add autopkgtest. This runs the upstream test suite against the
+    installed package (Closes: #729461)
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 05 Jan 2014 18:28:14 +0100
+
 python-dateutil (1.5-1) unstable; urgency=low
 
   [ Guido Günther ]
