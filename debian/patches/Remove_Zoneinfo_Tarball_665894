@@ -1,0 +1,78 @@
+Description: Remove dateutil/zoneinfo/zoneinfo-2010g.tar.gz from build system
+ python-dateutil (1.5+dfsg-0.1) unstable; urgency=low
+ .
+   * Non-maintainer upload.
+   * Repack upstream tarball to remove non-free time zone information
+     (sourceless binary data) (Closes: #665894)
+   * Remove reference to dateutil/zoneinfo/zoneinfo-2010g.tar.gz from both
+     upstream build system and debian/rules
+     - The file was not shipped in the binary, so there's no impact on the
+       functionality of the package
+Author: Scott Kitterman <scott@kitterman.com>
+Bug-Debian: http://bugs.debian.org/665894
+Origin: <vendor>
+Forwarded: <no>
+Last-Update: <2012-07-06>
+
+Index: python-dateutil-1.5+dfsg/MANIFEST.in
+===================================================================
+--- python-dateutil-1.5+dfsg.orig/MANIFEST.in	2012-07-06 09:37:24.398650586 -0400
++++ python-dateutil-1.5+dfsg/MANIFEST.in	2012-07-06 09:37:50.042649829 -0400
+@@ -1,4 +1,4 @@
+-recursive-include dateutil *.py *.tar.*
++recursive-include dateutil *.py
+ recursive-include sandbox *.py
+ include setup.py setup.cfg MANIFEST.in README LICENSE NEWS Makefile
+ include test.py example.py
+Index: python-dateutil-1.5+dfsg/setup.py
+===================================================================
+--- python-dateutil-1.5+dfsg.orig/setup.py	2012-07-06 09:37:24.414650583 -0400
++++ python-dateutil-1.5+dfsg/setup.py	2012-07-06 09:37:50.042649829 -0400
+@@ -29,7 +29,5 @@
+ datetime module, available in Python 2.3+.
+ """,
+       packages = ["dateutil", "dateutil.zoneinfo"],
+-      package_data={"": ["*.tar.gz"]},
+-      include_package_data=True,
+       zip_safe=False,
+       )
+Index: python-dateutil-1.5+dfsg/python_dateutil.egg-info/SOURCES.txt
+===================================================================
+--- python-dateutil-1.5+dfsg.orig/python_dateutil.egg-info/SOURCES.txt	2012-07-06 09:37:24.426650583 -0400
++++ python-dateutil-1.5+dfsg/python_dateutil.egg-info/SOURCES.txt	2012-07-06 09:37:50.042649829 -0400
+@@ -16,11 +16,10 @@
+ dateutil/tz.py
+ dateutil/tzwin.py
+ dateutil/zoneinfo/__init__.py
+-dateutil/zoneinfo/zoneinfo-2010g.tar.gz
+ python_dateutil.egg-info/PKG-INFO
+ python_dateutil.egg-info/SOURCES.txt
+ python_dateutil.egg-info/dependency_links.txt
+ python_dateutil.egg-info/not-zip-safe
+ python_dateutil.egg-info/top_level.txt
+ sandbox/rrulewrapper.py
+-sandbox/scheduler.py
+\ No newline at end of file
++sandbox/scheduler.py
+Index: python-dateutil-1.5+dfsg/test.py
+===================================================================
+--- python-dateutil-1.5+dfsg.orig/test.py	2012-07-06 09:37:46.118649944 -0400
++++ python-dateutil-1.5+dfsg/test.py	2012-07-06 09:38:12.294649170 -0400
+@@ -3883,7 +3883,7 @@
+         self.assertEqual(datetime(2003,10,26,0,59,tzinfo=tz).tzname(), "EDT")
+         self.assertEqual(datetime(2003,10,26,1,00,tzinfo=tz).tzname(), "EST")
+ 
+-    def testZoneInfoFileStart1(self):
++    """def testZoneInfoFileStart1(self):
+         tz = zoneinfo.gettz("EST5EDT")
+         self.assertEqual(datetime(2003,4,6,1,59,tzinfo=tz).tzname(), "EST")
+         self.assertEqual(datetime(2003,4,6,2,00,tzinfo=tz).tzname(), "EDT")
+@@ -3900,7 +3900,7 @@
+         t1 = t0.astimezone(utc)
+         t2 = t1.astimezone(nyc)
+         self.assertEquals(t0, t2)
+-        self.assertEquals(nyc.dst(t0), timedelta(hours=1))
++        self.assertEquals(nyc.dst(t0), timedelta(hours=1))"""
+ 
+     def testICalStart1(self):
+         tz = tzical(StringIO(self.TZICAL_EST5EDT)).get()

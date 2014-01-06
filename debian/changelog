@@ -1,10 +1,22 @@
-python-dateutil (1.5-2) unstable; urgency=medium
+python-dateutil (1.5+dfsg-1) unstable; urgency=medium
 
   [ Jean-Baptiste Lallement ]
   * [cddbc8b] Add autopkgtest. This runs the upstream test suite against the
     installed package (Closes: #729461)
 
  -- Guido Günther <agx@sigxcpu.org>  Sun, 05 Jan 2014 18:28:14 +0100
+
+python-dateutil (1.5+dfsg-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Repack upstream tarball to remove non-free time zone information
+    (sourceless binary data) (Closes: #665894)
+  * Remove reference to dateutil/zoneinfo/zoneinfo-2010g.tar.gz from both
+    upstream build system and debian/rules
+    - The file was not shipped in the binary, so there's no impact on the
+      functionality of the package
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 06 Jul 2012 09:00:45 -0400
 
 python-dateutil (1.5-1) unstable; urgency=low
 
