@@ -1,5 +1,12 @@
 python-dateutil (1.5+dfsg-1) unstable; urgency=medium
 
+  [ Guido Günther ]
+  * [43a04cc] Remove .pc/ directory.
+    This only confuses version control
+  * [09e938a] User proper extension for patch file
+  * [2909f7b] Bump standards version
+  * Acknowledge NMU, thanks Scott!
+
   [ Jean-Baptiste Lallement ]
   * [cddbc8b] Add autopkgtest. This runs the upstream test suite against the
     installed package (Closes: #729461)
