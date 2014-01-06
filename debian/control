@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends: debhelper (>= 8), python-all (>= 2.6.6-3~), python-setuptools
-Standards-Version: 3.9.2
+Standards-Version: 3.9.4
 Vcs-Git: git://git.debian.org/git/calendarserver/python-dateutil.git
 Vcs-Browser: http://git.debian.org/?p=calendarserver/python-dateutil.git
 X-Python-Version: >= 2.3
