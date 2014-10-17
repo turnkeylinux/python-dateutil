@@ -1,3 +1,9 @@
+python-dateutil (2.2-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 17 Oct 2014 10:12:00 +0200
+
 python-dateutil (2.2-1) experimental; urgency=medium
 
   [ Martin Pitt ]
