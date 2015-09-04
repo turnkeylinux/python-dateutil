@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 8),
  python-all (>= 2.6.6-3~),
  python-setuptools,
  python-six,
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Vcs-Git: git://git.debian.org/git/calendarserver/python-dateutil.git
 Vcs-Browser: http://git.debian.org/?p=calendarserver/python-dateutil.git
 X-Python-Version: >= 2.3
