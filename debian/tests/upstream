@@ -3,5 +3,5 @@
 set -e
 set -x
 
-python ./test.py -v
-python3 ./test.py -v 
+python ./dateutil/test/test.py -v
+python3 ./dateutil/test/test.py -v
