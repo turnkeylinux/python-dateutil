@@ -1,3 +1,27 @@
+python-dateutil (2.4.2-1) unstable; urgency=medium
+
+  [ Guido Günther ]
+  * [0b32e41] Update watch URL.
+    Thanks to Thomas Kluyver
+  * [c97e964] New upstream version 2.4.2
+  * [948bc01] Rediff patches.
+    Dropped Use-C-locale-when-calling-date.patch: <REASON>
+  * [230aea3] Adjust paths to tests
+  * [7973d50] Drop README
+    not in upstream tarball anymore
+  * [0fd6d39] Drop debian/examples
+    since example got dropped upstream
+  * [427b190] Build-dep on dh-python
+    as suggested by dh_python2
+  * [7d3a975] Bump standards version
+
+  [ Diane Trout ]
+  * [36b8175] Update watch file to use pypi.debian.net
+  * [0acf506] Add Paul Ganssle's pgp key.
+  * [9e32817] Let pybuild discover new test files.
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 15 Nov 2015 16:26:21 +0100
+
 python-dateutil (2.2-2) unstable; urgency=medium
 
   * Upload to unstable
