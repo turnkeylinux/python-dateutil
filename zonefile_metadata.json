@@ -1,9 +1,13 @@
 {
-    "metadata_version" : 0.1,
-    "releases_url" : "ftp://ftp.iana.org/tz/releases/",
-    "tzdata_file" : "tzdata2015b.tar.gz",
-    "tzdata_file_sha512" : "767782b87e62a8f7a4dbcae595d16a54197c9e04ca974d7016d11f90ebaf2537b804d111f204af9052c68d4670afe0af0af9e5b150867a357fc199bb541368d0",
-    "zonegroups" : [
+    "metadata_version": 2.0,
+    "releases_url": [
+        "https://dateutil.github.io/tzdata/tzdata/",
+        "ftp://ftp.iana.org/tz/releases/"
+    ],
+    "tzdata_file": "tzdata2016d.tar.gz",
+    "tzdata_file_sha512": "f1beb1793c4c7d18f2dadaf4a928b1476f66b400bda0c87b06155c0dd1c4b4a26bb2f37dc17a3676a2bbe9c1e71a5d8b27a171c797a86464b0bc0d13abfb2f99",
+    "tzversion": "2016d",
+    "zonegroups": [
         "africa",
         "antarctica",
         "asia",
@@ -16,6 +20,6 @@
         "systemv",
         "factory",
         "backzone",
-        "backward"]
+        "backward"
+    ]
 }
-
