@@ -1,52 +1,60 @@
 From: =?utf-8?q?Guido_G=C3=BCnther?= <agx@sigxcpu.org>
 Date: Sat, 27 Sep 2014 20:52:15 +0200
-Subject: Remove_Zoneinfo_Tarball
+Subject: Remove Zoneinfo Tarball
 
 ---
- MANIFEST.in                          | 2 +-
- dateutil/test/test.py                | 4 ++--
+ MANIFEST.in                          | 1 +
+ dateutil/test/test_tz.py             | 3 +++
  python_dateutil.egg-info/SOURCES.txt | 3 +--
  setup.py                             | 1 -
- 4 files changed, 4 insertions(+), 6 deletions(-)
+ 4 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/MANIFEST.in b/MANIFEST.in
-index fdfe94a..94cfbdf 100644
+index dd5142e..40d4e6b 100644
 --- a/MANIFEST.in
 +++ b/MANIFEST.in
-@@ -1 +1 @@
--include LICENSE NEWS zonefile_metadata.json updatezinfo.py
-+include LICENSE NEWS updatezinfo.py
-diff --git a/dateutil/test/test.py b/dateutil/test/test.py
-index 1d861c8..61e0045 100644
---- a/dateutil/test/test.py
-+++ b/dateutil/test/test.py
-@@ -4050,7 +4050,7 @@ END:VTIMEZONE
-         self.assertEqual(datetime(2003, 10, 26, 1, 00, tzinfo=tz).tzname(),
+@@ -2,3 +2,4 @@ include LICENSE NEWS zonefile_metadata.json updatezinfo.py
+ recursive-include dateutil/test *
+ global-exclude __pycache__
+ global-exclude *.py[co]
++exclude dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
+diff --git a/dateutil/test/test_tz.py b/dateutil/test/test_tz.py
+index cd80ce4..7d528ba 100644
+--- a/dateutil/test/test_tz.py
++++ b/dateutil/test/test_tz.py
+@@ -249,12 +249,14 @@ class TZTest(unittest.TestCase):
+         self.assertEqual(datetime(2003, 10, 26, 1, 00, tzinfo=tzc).tzname(),
                           "EST")
  
--    def testZoneInfoFileStart1(self):
-+    """def testZoneInfoFileStart1(self):
++    @unittest.skip
+     def testZoneInfoFileStart1(self):
          tz = zoneinfo.gettz("EST5EDT")
          self.assertEqual(datetime(2003, 4, 6, 1, 59, tzinfo=tz).tzname(), "EST",
                           MISSING_TARBALL)
-@@ -4072,7 +4072,7 @@ END:VTIMEZONE
-         t1 = t0.astimezone(utc)
-         t2 = t1.astimezone(nyc)
-         self.assertEqual(t0, t2)
--        self.assertEqual(nyc.dst(t0), timedelta(hours=1))
-+        self.assertEqual(nyc.dst(t0), timedelta(hours=1))"""
+         self.assertEqual(datetime(2003, 4, 6, 2, 00, tzinfo=tz).tzname(), "EDT")
  
-     def testICalStart1(self):
-         tz = tzical(StringIO(self.TZICAL_EST5EDT)).get()
++    @unittest.skip
+     def testZoneInfoFileEnd1(self):
+         tzc = zoneinfo.gettz("EST5EDT")
+         self.assertEqual(datetime(2003, 10, 26, 0, 59, tzinfo=tzc).tzname(),
+@@ -262,6 +264,7 @@ class TZTest(unittest.TestCase):
+         self.assertEqual(datetime(2003, 10, 26, 1, 00, tzinfo=tzc).tzname(),
+                          "EST")
+ 
++    @unittest.skip
+     def testZoneInfoOffsetSignal(self):
+         utc = zoneinfo.gettz("UTC")
+         nyc = zoneinfo.gettz("America/New_York")
 diff --git a/python_dateutil.egg-info/SOURCES.txt b/python_dateutil.egg-info/SOURCES.txt
-index 74a7872..408bc57 100644
+index b012f60..4050194 100644
 --- a/python_dateutil.egg-info/SOURCES.txt
 +++ b/python_dateutil.egg-info/SOURCES.txt
-@@ -16,10 +16,9 @@ dateutil/tzwin.py
- dateutil/test/__init__.py
- dateutil/test/test.py
+@@ -25,11 +25,10 @@ dateutil/tz/_common.py
+ dateutil/tz/tz.py
+ dateutil/tz/win.py
  dateutil/zoneinfo/__init__.py
 -dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
+ dateutil/zoneinfo/rebuild.py
  python_dateutil.egg-info/PKG-INFO
  python_dateutil.egg-info/SOURCES.txt
  python_dateutil.egg-info/dependency_links.txt
@@ -56,13 +64,13 @@ index 74a7872..408bc57 100644
 \ No newline at end of file
 +python_dateutil.egg-info/zip-safe
 diff --git a/setup.py b/setup.py
-index 02db365..275b23f 100644
+index 4f44c68..97fc2e4 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -29,7 +29,6 @@ The dateutil module provides powerful extensions to the
  datetime module available in the Python standard library.
  """,
-       packages=["dateutil", "dateutil.zoneinfo"],
+       packages=["dateutil", "dateutil.zoneinfo", "dateutil.tz"],
 -      package_data={"dateutil.zoneinfo": ["dateutil-zoneinfo.tar.gz"]},
        zip_safe=True,
        requires=["six"],
