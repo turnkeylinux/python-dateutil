@@ -1,3 +1,12 @@
+python-dateutil (2.5.3-1) unstable; urgency=medium
+
+  * [771b73d] New upstream version 2.5.3 (Closes: #837918)
+  * [679dfa9] Adjust timezone removal patch
+  * [0039af1] Run autopkgtests using nosetest
+    since dateutil now has a testsuite instead of a test script
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 16 Sep 2016 11:50:55 +0200
+
 python-dateutil (2.4.2-1) unstable; urgency=medium
 
   [ Guido Günther ]
