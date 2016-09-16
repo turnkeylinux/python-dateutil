@@ -3,5 +3,15 @@
 set -e
 set -x
 
-python ./dateutil/test/test.py -v
-python3 ./dateutil/test/test.py -v
+cleanup() {
+    [ -z "$TMPDIR" ] || rm -r "$TMPDIR"
+}
+trap cleanup EXIT
+
+TMPDIR=$(mktemp -d)
+
+cp -a dateutil/test $TMPDIR
+cd $TMPDIR
+nosetests-2.7
+nosetests3
+
