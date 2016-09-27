@@ -1,3 +1,14 @@
+python-dateutil (2.5.3-2) unstable; urgency=medium
+
+  * [458e1f9] Move test dependencies from debian/control to
+    debian/tests/control
+  * [4c7a166] Use unittest.skip correctly
+  * [1aca1b9] Bump standads version
+  * [8494f04] Use https:// Vcs-* fields
+  * [1600fd1] Drop superfluous XS-Testsuite field
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 27 Sep 2016 09:09:45 +0200
+
 python-dateutil (2.5.3-1) unstable; urgency=medium
 
   * [771b73d] New upstream version 2.5.3 (Closes: #837918)
