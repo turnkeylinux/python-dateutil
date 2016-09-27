@@ -1,3 +1,5 @@
 Tests: upstream
-Depends: @
+Depends: @,
+ python-nose,
+ python3-nose,
 Restrictions: allow-stderr
