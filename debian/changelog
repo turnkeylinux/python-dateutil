@@ -1,11 +1,12 @@
-python-dateutil (2.6.0-1~1.gbp6ce611) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @6ce611292ad0d53f31e03e96bf5349718763acae **
+python-dateutil (2.6.0-1) unstable; urgency=medium
 
   * [4e96182] Use DEP14 branch layout
   * [57f8072] New upstream version 2.6.0
+    (Closes: #867865)
+  * [9ae38ed] Update zoneinfo patch to new upstream version
+  * [ef8c0e9] Bump standards version
 
- -- Guido Günther <agx@sigxcpu.org>  Mon, 10 Jul 2017 07:52:05 +0200
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 10 Jul 2017 09:08:08 +0200
 
 python-dateutil (2.5.3-2) unstable; urgency=medium
 
