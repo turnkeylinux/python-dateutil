@@ -4,10 +4,10 @@ Subject: Remove Zoneinfo Tarball
 
 ---
  MANIFEST.in                          | 1 +
- dateutil/test/test_tz.py             | 3 +++
+ dateutil/test/test_tz.py             | 2 ++
  python_dateutil.egg-info/SOURCES.txt | 3 +--
  setup.py                             | 1 -
- 4 files changed, 5 insertions(+), 3 deletions(-)
+ 4 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/MANIFEST.in b/MANIFEST.in
 index dd5142e..40d4e6b 100644
@@ -19,44 +19,38 @@ index dd5142e..40d4e6b 100644
  global-exclude *.py[co]
 +exclude dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
 diff --git a/dateutil/test/test_tz.py b/dateutil/test/test_tz.py
-index cd80ce4..240b383 100644
+index 4ca2036..885a03b 100644
 --- a/dateutil/test/test_tz.py
 +++ b/dateutil/test/test_tz.py
-@@ -249,12 +249,14 @@ class TZTest(unittest.TestCase):
-         self.assertEqual(datetime(2003, 10, 26, 1, 00, tzinfo=tzc).tzname(),
-                          "EST")
+@@ -878,6 +878,7 @@ class GettzTest(unittest.TestCase, TzFoldMixin):
+         self.assertEqual(t_west.dst(), timedelta(hours=1))
  
-+    @unittest.skip("No tz database")
-     def testZoneInfoFileStart1(self):
-         tz = zoneinfo.gettz("EST5EDT")
-         self.assertEqual(datetime(2003, 4, 6, 1, 59, tzinfo=tz).tzname(), "EST",
-                          MISSING_TARBALL)
-         self.assertEqual(datetime(2003, 4, 6, 2, 00, tzinfo=tz).tzname(), "EDT")
  
-+    @unittest.skip("No tz database")
-     def testZoneInfoFileEnd1(self):
-         tzc = zoneinfo.gettz("EST5EDT")
-         self.assertEqual(datetime(2003, 10, 26, 0, 59, tzinfo=tzc).tzname(),
-@@ -262,6 +264,7 @@ class TZTest(unittest.TestCase):
-         self.assertEqual(datetime(2003, 10, 26, 1, 00, tzinfo=tzc).tzname(),
-                          "EST")
++@unittest.skip("No prepackaged zoneinfo tarball")
+ class ZoneInfoGettzTest(GettzTest, WarningTestMixin):
+     def gettz(self, name):
+         zoneinfo_file = zoneinfo.get_zonefile_instance()
+@@ -1850,6 +1851,7 @@ class TzPickleTest(PicklableMixin, unittest.TestCase):
+     def testPickleTzGettz(self):
+         self.assertPicklable(tz.gettz('America/New_York'))
  
-+    @unittest.skip("No tz database")
-     def testZoneInfoOffsetSignal(self):
-         utc = zoneinfo.gettz("UTC")
-         nyc = zoneinfo.gettz("America/New_York")
++    @unittest.skip("No prepackaged zoneinfo tarball")
+     def testPickleZoneFileGettz(self):
+         zoneinfo_file = zoneinfo.get_zonefile_instance()
+         tzi = zoneinfo_file.get('America/New_York')
 diff --git a/python_dateutil.egg-info/SOURCES.txt b/python_dateutil.egg-info/SOURCES.txt
-index b012f60..4050194 100644
+index 5a9d6a6..9b8de49 100644
 --- a/python_dateutil.egg-info/SOURCES.txt
 +++ b/python_dateutil.egg-info/SOURCES.txt
-@@ -25,11 +25,10 @@ dateutil/tz/_common.py
+@@ -36,7 +36,6 @@ dateutil/tz/_common.py
  dateutil/tz/tz.py
  dateutil/tz/win.py
  dateutil/zoneinfo/__init__.py
 -dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
  dateutil/zoneinfo/rebuild.py
- python_dateutil.egg-info/PKG-INFO
- python_dateutil.egg-info/SOURCES.txt
+ docs/Makefile
+ docs/conf.py
+@@ -55,4 +54,4 @@ python_dateutil.egg-info/SOURCES.txt
  python_dateutil.egg-info/dependency_links.txt
  python_dateutil.egg-info/requires.txt
  python_dateutil.egg-info/top_level.txt
@@ -64,7 +58,7 @@ index b012f60..4050194 100644
 \ No newline at end of file
 +python_dateutil.egg-info/zip-safe
 diff --git a/setup.py b/setup.py
-index 4f44c68..97fc2e4 100644
+index 46c0bc7..d18c199 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -29,7 +29,6 @@ The dateutil module provides powerful extensions to the
