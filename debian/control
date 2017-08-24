@@ -20,7 +20,7 @@ Package: python-dateutil
 Architecture: all
 Depends: ${python:Depends}, ${misc:Depends}, tzdata
 XB-Python-Version: ${python:Version}
-Description: powerful extensions to the standard datetime module
+Description: powerful extensions to the standard Python datetime module
  It features:
  .
   * computing of relative deltas (next month, next year, next monday, last week
@@ -36,12 +36,14 @@ Description: powerful extensions to the standard datetime module
     timezone
   * computing of Easter Sunday dates for any given year, using Western, Orthodox
     or Julian algorithms
+ .
+ This package provides the Python 2 version of the datetime module.
 
 Package: python3-dateutil
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends}, tzdata
 XB-Python-Version: ${python3:Version}
-Description: powerful extensions to the standard datetime module
+Description: powerful extensions to the standard Python 3 datetime module
  It features:
  .
   * computing of relative deltas (next month, next year, next monday, last week
@@ -57,3 +59,5 @@ Description: powerful extensions to the standard datetime module
     timezone
   * computing of Easter Sunday dates for any given year, using Western, Orthodox
     or Julian algorithms
+ .
+ This package provides the Python 3 version of the datetime module.
