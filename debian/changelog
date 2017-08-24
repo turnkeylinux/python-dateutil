@@ -1,3 +1,11 @@
+python-dateutil (2.6.1-1~1.gbpe8a968) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @e8a968fef9005ed54c11bfd1b1850d716fffa58e **
+
+  * [777d7bc] New upstream version 2.6.1
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 24 Aug 2017 20:32:47 +0200
+
 python-dateutil (2.6.0-1) unstable; urgency=medium
 
   * [4e96182] Use DEP14 branch layout
