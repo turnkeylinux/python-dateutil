@@ -19,10 +19,10 @@ index dd5142e..40d4e6b 100644
  global-exclude *.py[co]
 +exclude dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
 diff --git a/dateutil/test/test_tz.py b/dateutil/test/test_tz.py
-index 4ca2036..885a03b 100644
+index 99e43cd..b769f30 100644
 --- a/dateutil/test/test_tz.py
 +++ b/dateutil/test/test_tz.py
-@@ -878,6 +878,7 @@ class GettzTest(unittest.TestCase, TzFoldMixin):
+@@ -893,6 +893,7 @@ class GettzTest(unittest.TestCase, TzFoldMixin):
          self.assertEqual(t_west.dst(), timedelta(hours=1))
  
  
@@ -30,7 +30,7 @@ index 4ca2036..885a03b 100644
  class ZoneInfoGettzTest(GettzTest, WarningTestMixin):
      def gettz(self, name):
          zoneinfo_file = zoneinfo.get_zonefile_instance()
-@@ -1850,6 +1851,7 @@ class TzPickleTest(PicklableMixin, unittest.TestCase):
+@@ -1897,6 +1898,7 @@ class TzPickleTest(PicklableMixin, unittest.TestCase):
      def testPickleTzGettz(self):
          self.assertPicklable(tz.gettz('America/New_York'))
  
@@ -39,18 +39,17 @@ index 4ca2036..885a03b 100644
          zoneinfo_file = zoneinfo.get_zonefile_instance()
          tzi = zoneinfo_file.get('America/New_York')
 diff --git a/python_dateutil.egg-info/SOURCES.txt b/python_dateutil.egg-info/SOURCES.txt
-index 5a9d6a6..9b8de49 100644
+index f9b8cc6..697dae0 100644
 --- a/python_dateutil.egg-info/SOURCES.txt
 +++ b/python_dateutil.egg-info/SOURCES.txt
-@@ -36,7 +36,6 @@ dateutil/tz/_common.py
+@@ -27,11 +27,10 @@ dateutil/tz/_common.py
  dateutil/tz/tz.py
  dateutil/tz/win.py
  dateutil/zoneinfo/__init__.py
 -dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
  dateutil/zoneinfo/rebuild.py
- docs/Makefile
- docs/conf.py
-@@ -55,4 +54,4 @@ python_dateutil.egg-info/SOURCES.txt
+ python_dateutil.egg-info/PKG-INFO
+ python_dateutil.egg-info/SOURCES.txt
  python_dateutil.egg-info/dependency_links.txt
  python_dateutil.egg-info/requires.txt
  python_dateutil.egg-info/top_level.txt
@@ -58,10 +57,10 @@ index 5a9d6a6..9b8de49 100644
 \ No newline at end of file
 +python_dateutil.egg-info/zip-safe
 diff --git a/setup.py b/setup.py
-index 46c0bc7..d18c199 100644
+index d38bb12..d9b58fd 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -29,7 +29,6 @@ The dateutil module provides powerful extensions to the
+@@ -23,7 +23,6 @@ The dateutil module provides powerful extensions to the
  datetime module available in the Python standard library.
  """,
        packages=["dateutil", "dateutil.zoneinfo", "dateutil.tz"],
