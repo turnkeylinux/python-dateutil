@@ -1,11 +1,12 @@
-python-dateutil (2.6.1-1~2.gbpeb1134) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @eb1134fc0e8cb5da0b9fbed708eb97c8efa02eb9 **
+python-dateutil (2.6.1-1) unstable; urgency=medium
 
   * [777d7bc] New upstream version 2.6.1
   * [eb1134f] Rediff patches
+  * [72c3178] Bump standards version (no changes needed)
+  * [d632228] Use versioned debhelper build-dep
+  * [4f20417] Make short and long descritions unique
 
- -- Guido Günther <agx@sigxcpu.org>  Thu, 24 Aug 2017 20:33:44 +0200
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 24 Aug 2017 22:06:11 +0200
 
 python-dateutil (2.6.0-1) unstable; urgency=medium
 
