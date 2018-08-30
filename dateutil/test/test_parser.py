@@ -1,14 +1,59 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from ._common import unittest
 
+import itertools
 from datetime import datetime, timedelta
+import unittest
+import sys
 
+from dateutil import tz
 from dateutil.tz import tzoffset
 from dateutil.parser import parse, parserinfo
+from dateutil.parser import UnknownTimezoneWarning
+
+from ._common import TZEnvContext
 
 from six import assertRaisesRegex, PY3
 from six.moves import StringIO
+
+import pytest
+
+# Platform info
+IS_WIN = sys.platform.startswith('win')
+
+try:
+    datetime.now().strftime('%-d')
+    PLATFORM_HAS_DASH_D = True
+except ValueError:
+    PLATFORM_HAS_DASH_D = False
+
+
+class TestFormat(unittest.TestCase):
+
+    def test_ybd(self):
+        # If we have a 4-digit year, a non-numeric month (abbreviated or not),
+        # and a day (1 or 2 digits), then there is no ambiguity as to which
+        # token is a year/month/day.  This holds regardless of what order the
+        # terms are in and for each of the separators below.
+
+        seps = ['-', ' ', '/', '.']
+
+        year_tokens = ['%Y']
+        month_tokens = ['%b', '%B']
+        day_tokens = ['%d']
+        if PLATFORM_HAS_DASH_D:
+            day_tokens.append('%-d')
+
+        prods = itertools.product(year_tokens, month_tokens, day_tokens)
+        perms = [y for x in prods for y in itertools.permutations(x)]
+        unambig_fmts = [sep.join(perm) for sep in seps for perm in perms]
+
+        actual = datetime(2003, 9, 25)
+
+        for fmt in unambig_fmts:
+            dstr = actual.strftime(fmt)
+            res = parse(dstr)
+            self.assertEqual(res, actual)
 
 
 class ParserTest(unittest.TestCase):
@@ -57,6 +102,14 @@ class ParserTest(unittest.TestCase):
     def testParseStr(self):
         self.assertEqual(parse(self.str_str),
                          parse(self.uni_str))
+
+    def testParseBytes(self):
+        self.assertEqual(parse(b'2014 January 19'), datetime(2014, 1, 19))
+
+    def testParseBytearray(self):
+        # GH #417
+        self.assertEqual(parse(bytearray(b'2014 January 19')),
+                         datetime(2014, 1, 19))
 
     def testParserParseStr(self):
         from dateutil.parser import parser
@@ -117,7 +170,6 @@ class ParserTest(unittest.TestCase):
                                    tzinfos={"BRST": long(-10800)}),
                              datetime(2003, 9, 25, 10, 36, 28,
                                       tzinfo=self.brsttz))
-
     def testDateCommandFormatIgnoreTz(self):
         self.assertEqual(parse("Thu Sep 25 10:36:28 BRST 2003",
                                ignoretz=True),
@@ -153,10 +205,6 @@ class ParserTest(unittest.TestCase):
 
     def testDateCommandFormatStrip8(self):
         self.assertEqual(parse("Thu Sep 25 2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateCommandFormatStrip9(self):
-        self.assertEqual(parse("Sep 25 2003"),
                          datetime(2003, 9, 25))
 
     def testDateCommandFormatStrip10(self):
@@ -244,22 +292,6 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(parse("2003-09-25"),
                          datetime(2003, 9, 25))
 
-    def testDateWithDash2(self):
-        self.assertEqual(parse("2003-Sep-25"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDash3(self):
-        self.assertEqual(parse("25-Sep-2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDash4(self):
-        self.assertEqual(parse("25-Sep-2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDash5(self):
-        self.assertEqual(parse("Sep-25-2003"),
-                         datetime(2003, 9, 25))
-
     def testDateWithDash6(self):
         self.assertEqual(parse("09-25-2003"),
                          datetime(2003, 9, 25))
@@ -286,22 +318,6 @@ class ParserTest(unittest.TestCase):
 
     def testDateWithDot1(self):
         self.assertEqual(parse("2003.09.25"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDot2(self):
-        self.assertEqual(parse("2003.Sep.25"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDot3(self):
-        self.assertEqual(parse("25.Sep.2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDot4(self):
-        self.assertEqual(parse("25.Sep.2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithDot5(self):
-        self.assertEqual(parse("Sep.25.2003"),
                          datetime(2003, 9, 25))
 
     def testDateWithDot6(self):
@@ -332,22 +348,6 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(parse("2003/09/25"),
                          datetime(2003, 9, 25))
 
-    def testDateWithSlash2(self):
-        self.assertEqual(parse("2003/Sep/25"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSlash3(self):
-        self.assertEqual(parse("25/Sep/2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSlash4(self):
-        self.assertEqual(parse("25/Sep/2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSlash5(self):
-        self.assertEqual(parse("Sep/25/2003"),
-                         datetime(2003, 9, 25))
-
     def testDateWithSlash6(self):
         self.assertEqual(parse("09/25/2003"),
                          datetime(2003, 9, 25))
@@ -374,22 +374,6 @@ class ParserTest(unittest.TestCase):
 
     def testDateWithSpace1(self):
         self.assertEqual(parse("2003 09 25"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSpace2(self):
-        self.assertEqual(parse("2003 Sep 25"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSpace3(self):
-        self.assertEqual(parse("25 Sep 2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSpace4(self):
-        self.assertEqual(parse("25 Sep 2003"),
-                         datetime(2003, 9, 25))
-
-    def testDateWithSpace5(self):
-        self.assertEqual(parse("Sep 25 2003"),
                          datetime(2003, 9, 25))
 
     def testDateWithSpace6(self):
@@ -422,10 +406,6 @@ class ParserTest(unittest.TestCase):
 
     def testStrangelyOrderedDate1(self):
         self.assertEqual(parse("03 25 Sep"),
-                         datetime(2003, 9, 25))
-
-    def testStrangelyOrderedDate2(self):
-        self.assertEqual(parse("2003 25 Sep"),
                          datetime(2003, 9, 25))
 
     def testStrangelyOrderedDate3(self):
@@ -594,8 +574,9 @@ class ParserTest(unittest.TestCase):
 
     def testFuzzyIgnoreAMPM(self):
         s1 = "Jan 29, 1945 14:45 AM I going to see you there?"
-
-        self.assertEqual(parse(s1, fuzzy=True), datetime(1945, 1, 29, 14, 45))
+        with pytest.warns(UnknownTimezoneWarning):
+            res = parse(s1, fuzzy=True)
+        self.assertEqual(res, datetime(1945, 1, 29, 14, 45))
 
     def testExtraSpace(self):
         self.assertEqual(parse("  July   4 ,  1976   12:01:02   am  "),
@@ -703,8 +684,10 @@ class ParserTest(unittest.TestCase):
                          datetime(2003, 9, 25, 12, 8))
 
     def testRandomFormat26(self):
-        self.assertEqual(parse("5:50 A.M. on June 13, 1990"),
-                         datetime(1990, 6, 13, 5, 50))
+        with pytest.warns(UnknownTimezoneWarning):
+            res = parse("5:50 A.M. on June 13, 1990")
+
+        self.assertEqual(res, datetime(1990, 6, 13, 5, 50))
 
     def testRandomFormat27(self):
         self.assertEqual(parse("3rd of May 2001"), datetime(2001, 5, 3))
@@ -763,6 +746,14 @@ class ParserTest(unittest.TestCase):
     def testUnspecifiedDayFallbackFebLeapYear(self):
         self.assertEqual(parse("Feb 2008", default=datetime(2010, 1, 31)),
                          datetime(2008, 2, 29))
+
+    def testTzinfoDictionaryCouldReturnNone(self):
+        self.assertEqual(parse('2017-02-03 12:40 BRST', tzinfos={"BRST": None}),
+                        datetime(2017, 2, 3, 12, 40))
+
+    def testTzinfosCallableCouldReturnNone(self):
+        self.assertEqual(parse('2017-02-03 12:40 BRST', tzinfos=lambda *args: None),
+                                    datetime(2017, 2, 3, 12, 40))
 
     def testErrorType01(self):
         self.assertRaises(ValueError,
@@ -895,3 +886,229 @@ class ParserTest(unittest.TestCase):
         dtstr = '2015 09 25'
         self.assertEqual(parse(dtstr, dayfirst=True, yearfirst=True),
                          datetime(2015, 9, 25))
+
+    def test_mstridx(self):
+        # See GH408
+        dtstr = '2015-15-May'
+        self.assertEqual(parse(dtstr),
+                         datetime(2015, 5, 15))
+
+    def test_idx_check(self):
+        dtstr = '2017-07-17 06:15:'
+        # Pre-PR, the trailing colon will cause an IndexError at 824-825
+        # when checking `i < len_l` and then accessing `l[i+1]`
+        res = parse(dtstr, fuzzy=True)
+        self.assertEqual(res, datetime(2017, 7, 17, 6, 15))
+
+    def test_dBY(self):
+        # See GH360
+        dtstr = '13NOV2017'
+        res = parse(dtstr)
+        self.assertEqual(res, datetime(2017, 11, 13))
+
+    def test_hmBY(self):
+        # See GH#483
+        dtstr = '02:17NOV2017'
+        res = parse(dtstr, default=self.default)
+        self.assertEqual(res, datetime(2017, 11, self.default.day, 2, 17))
+
+    def test_validate_hour(self):
+        # See GH353
+        invalid = "201A-01-01T23:58:39.239769+03:00"
+        with self.assertRaises(ValueError):
+            parse(invalid)
+
+    def test_era_trailing_year(self):
+        dstr = 'AD2001'
+        res = parse(dstr)
+        assert res.year == 2001, res
+
+    def test_pre_12_year_same_month(self):
+        # See GH PR #293
+        dtstr = '0003-03-04'
+        assert parse(dtstr) == datetime(3, 3, 4)
+
+
+class TestParseUnimplementedCases(object):
+    @pytest.mark.xfail
+    def test_somewhat_ambiguous_string(self):
+        # Ref: github issue #487
+        # The parser is choosing the wrong part for hour
+        # causing datetime to raise an exception.
+        dtstr = '1237 PM BRST Mon Oct 30 2017'
+        res = parse(dtstr, tzinfo=self.tzinfos)
+        assert res == datetime(2017, 10, 30, 12, 37, tzinfo=self.tzinfos)
+
+    @pytest.mark.xfail
+    def test_YmdH_M_S(self):
+        # found in nasdaq's ftp data
+        dstr = '1991041310:19:24'
+        expected = datetime(1991, 4, 13, 10, 19, 24)
+        res = parse(dstr)
+        assert res == expected, (res, expected)
+
+    @pytest.mark.xfail
+    def test_first_century(self):
+        dstr = '0031 Nov 03'
+        expected = datetime(31, 11, 3)
+        res = parse(dstr)
+        assert res == expected, res
+
+    @pytest.mark.xfail
+    def test_era_trailing_year_with_dots(self):
+        dstr = 'A.D.2001'
+        res = parse(dstr)
+        assert res.year == 2001, res
+
+    @pytest.mark.xfail
+    def test_ad_nospace(self):
+        expected = datetime(6, 5, 19)
+        for dstr in [' 6AD May 19', ' 06AD May 19',
+                     ' 006AD May 19', ' 0006AD May 19']:
+            res = parse(dstr)
+            assert res == expected, (dstr, res)
+
+    @pytest.mark.xfail
+    def test_four_letter_day(self):
+        dstr = 'Frid Dec 30, 2016'
+        expected = datetime(2016, 12, 30)
+        res = parse(dstr)
+        assert res == expected
+
+    @pytest.mark.xfail
+    def test_non_date_number(self):
+        dstr = '1,700'
+        with pytest.raises(ValueError):
+            parse(dstr)
+
+    @pytest.mark.xfail
+    def test_on_era(self):
+        # This could be classified as an "eras" test, but the relevant part
+        # about this is the ` on `
+        dstr = '2:15 PM on January 2nd 1973 A.D.'
+        expected = datetime(1973, 1, 2, 14, 15)
+        res = parse(dstr)
+        assert res == expected
+
+    @pytest.mark.xfail
+    def test_extraneous_year(self):
+        # This was found in the wild at insidertrading.org
+        dstr = "2011 MARTIN CHILDREN'S IRREVOCABLE TRUST u/a/d NOVEMBER 7, 2012"
+        res = parse(dstr, fuzzy_with_tokens=True)
+        expected = datetime(2012, 11, 7)
+        assert res == expected
+
+    @pytest.mark.xfail
+    def test_extraneous_year_tokens(self):
+        # This was found in the wild at insidertrading.org
+        # Unlike in the case above, identifying the first "2012" as the year
+        # would not be a problem, but infering that the latter 2012 is hhmm
+        # is a problem.
+        dstr = "2012 MARTIN CHILDREN'S IRREVOCABLE TRUST u/a/d NOVEMBER 7, 2012"
+        expected = datetime(2012, 11, 7)
+        (res, tokens) = parse(dstr, fuzzy_with_tokens=True)
+        assert res == expected
+        assert tokens == ("2012 MARTIN CHILDREN'S IRREVOCABLE TRUST u/a/d ",)
+
+    @pytest.mark.xfail
+    def test_extraneous_year2(self):
+        # This was found in the wild at insidertrading.org
+        dstr = ("Berylson Amy Smith 1998 Grantor Retained Annuity Trust "
+                "u/d/t November 2, 1998 f/b/o Jennifer L Berylson")
+        res = parse(dstr, fuzzy_with_tokens=True)
+        expected = datetime(1998, 11, 2)
+        assert res == expected
+
+    @pytest.mark.xfail
+    def test_extraneous_year3(self):
+        # This was found in the wild at insidertrading.org
+        dstr = "SMITH R &  WEISS D 94 CHILD TR FBO M W SMITH UDT 12/1/1994"
+        res = parse(dstr, fuzzy_with_tokens=True)
+        expected = datetime(1994, 12, 1)
+        assert res == expected
+
+    @pytest.mark.xfail
+    def test_unambiguous_YYYYMM(self):
+        # 171206 can be parsed as YYMMDD. However, 201712 cannot be parsed
+        # as instance of YYMMDD and parser could fallback to YYYYMM format.
+        dstr = "201712"
+        res = parse(dstr)
+        expected = datetime(2017, 12, 1)
+        assert res == expected
+
+@pytest.mark.skipif(IS_WIN, reason='Windows does not use TZ var')
+def test_parse_unambiguous_nonexistent_local():
+    # When dates are specified "EST" even when they should be "EDT" in the
+    # local time zone, we should still assign the local time zone
+    with TZEnvContext('EST+5EDT,M3.2.0/2,M11.1.0/2'):
+        dt_exp = datetime(2011, 8, 1, 12, 30, tzinfo=tz.tzlocal())
+        dt = parse('2011-08-01T12:30 EST')
+
+        assert dt.tzname() == 'EDT'
+        assert dt == dt_exp
+
+
+@pytest.mark.skipif(IS_WIN, reason='Windows does not use TZ var')
+def test_tzlocal_in_gmt():
+    # GH #318
+    with TZEnvContext('GMT0BST,M3.5.0,M10.5.0'):
+        # This is an imaginary datetime in tz.tzlocal() but should still
+        # parse using the GMT-as-alias-for-UTC rule
+        dt = parse('2004-05-01T12:00 GMT')
+        dt_exp = datetime(2004, 5, 1, 12, tzinfo=tz.tzutc())
+
+        assert dt == dt_exp
+
+
+@pytest.mark.skipif(IS_WIN, reason='Windows does not use TZ var')
+def test_tzlocal_parse_fold():
+    # One manifestion of GH #318
+    with TZEnvContext('EST+5EDT,M3.2.0/2,M11.1.0/2'):
+        dt_exp = datetime(2011, 11, 6, 1, 30, tzinfo=tz.tzlocal())
+        dt_exp = tz.enfold(dt_exp, fold=1)
+        dt = parse('2011-11-06T01:30 EST')
+
+        # Because this is ambiguous, kuntil `tz.tzlocal() is tz.tzlocal()`
+        # we'll just check the attributes we care about rather than
+        # dt == dt_exp
+        assert dt.tzname() == dt_exp.tzname()
+        assert dt.replace(tzinfo=None) == dt_exp.replace(tzinfo=None)
+        assert getattr(dt, 'fold') == getattr(dt_exp, 'fold')
+        assert dt.astimezone(tz.tzutc()) == dt_exp.astimezone(tz.tzutc())
+
+
+def test_parse_tzinfos_fold():
+    NYC = tz.gettz('America/New_York')
+    tzinfos = {'EST': NYC, 'EDT': NYC}
+
+    dt_exp = tz.enfold(datetime(2011, 11, 6, 1, 30, tzinfo=NYC), fold=1)
+    dt = parse('2011-11-06T01:30 EST', tzinfos=tzinfos)
+
+    assert dt == dt_exp
+    assert dt.tzinfo is dt_exp.tzinfo
+    assert getattr(dt, 'fold') == getattr(dt_exp, 'fold')
+    assert dt.astimezone(tz.tzutc()) == dt_exp.astimezone(tz.tzutc())
+
+
+@pytest.mark.parametrize('dtstr,dt', [
+    ('5.6h', datetime(2003, 9, 25, 5, 36)),
+    ('5.6m', datetime(2003, 9, 25, 0, 5, 36)),
+    # '5.6s' never had a rounding problem, test added for completeness
+    ('5.6s', datetime(2003, 9, 25, 0, 0, 5, 600000))
+])
+def test_rounding_floatlike_strings(dtstr, dt):
+    assert parse(dtstr, default=datetime(2003, 9, 25)) == dt
+
+
+@pytest.mark.parametrize('value', ['1: test', 'Nan'])
+def test_decimal_error(value):
+    # GH 632, GH 662 - decimal.Decimal raises some non-ValueError exception when
+    # constructed with an invalid value
+    with pytest.raises(ValueError):
+        parse(value)
+
+
+def test_BYd_corner_case():
+    # GH#687
+    res = parse('December.0031.30')
+    assert res == datetime(31, 12, 30)

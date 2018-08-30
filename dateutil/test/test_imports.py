@@ -1,9 +1,5 @@
 import sys
-
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
+import unittest
 
 class ImportVersionTest(unittest.TestCase):
     """ Test that dateutil.__version__ can be imported"""
@@ -118,16 +114,20 @@ class ImportTZTest(unittest.TestCase):
         from dateutil.tz import gettz
         from dateutil.tz import tzwin
         from dateutil.tz import tzwinlocal
+        from dateutil.tz import UTC
+        from dateutil.tz import datetime_ambiguous
+        from dateutil.tz import datetime_exists
+        from dateutil.tz import resolve_imaginary
 
         tz_all = ["tzutc", "tzoffset", "tzlocal", "tzfile", "tzrange",
-                  "tzstr", "tzical", "gettz"]
+                  "tzstr", "tzical", "gettz", "datetime_ambiguous",
+                  "datetime_exists", "resolve_imaginary", "UTC"]
 
         tz_all += ["tzwin", "tzwinlocal"] if sys.platform.startswith("win") else []
         lvars = locals()
 
         for var in tz_all:
             self.assertIsNot(lvars[var], None)
-
 
 @unittest.skipUnless(sys.platform.startswith('win'), "Requires Windows")
 class ImportTZWinTest(unittest.TestCase):
