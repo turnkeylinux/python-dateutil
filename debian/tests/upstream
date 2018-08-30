@@ -12,6 +12,5 @@ TMPDIR=$(mktemp -d)
 
 cp -a dateutil/test $TMPDIR
 cd $TMPDIR
-nosetests-2.7
-nosetests3
-
+python -mpytest
+python3 -mpytest

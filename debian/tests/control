@@ -1,5 +1,9 @@
 Tests: upstream
 Depends: @,
- python-nose,
- python3-nose,
+ python-freezegun,
+ python-hypothesis,
+ python-pytest,
+ python3-freezegun,
+ python3-hypothesis,
+ python3-pytest,
 Restrictions: allow-stderr
