@@ -6,9 +6,11 @@ Build-Depends: debhelper (>= 10~),
  dh-python,
  python3,
  python3-setuptools,
+ python3-setuptools-scm,
  python3-six,
  python-all (>= 2.6.6-3~),
  python-setuptools,
+ python-setuptools-scm,
  python-six,
 Standards-Version: 4.0.0
 Vcs-Git: https://anonscm.debian.org/git/calendarserver/python-dateutil.git
