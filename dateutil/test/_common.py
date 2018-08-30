@@ -1,11 +1,5 @@
 from __future__ import unicode_literals
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
-
 import os
-import datetime
 import time
 import subprocess
 import warnings
@@ -81,7 +75,7 @@ class PicklableMixin(object):
 
         return nobj
 
-    def assertPicklable(self, obj, asfile=False,
+    def assertPicklable(self, obj, singleton=False, asfile=False,
                         dump_kwargs=None, load_kwargs=None):
         """
         Assert that an object can be pickled and unpickled. This assertion
@@ -93,7 +87,8 @@ class PicklableMixin(object):
         load_kwargs = load_kwargs or {}
 
         nobj = get_nobj(obj, dump_kwargs, load_kwargs)
-        self.assertIsNot(obj, nobj)
+        if not singleton:
+            self.assertIsNot(obj, nobj)
         self.assertEqual(obj, nobj)
 
 
@@ -207,18 +202,6 @@ class TZWinContext(TZContextBase):
         if p.returncode:
             raise OSError('Failed to set current time zone: ' +
                           (err or 'Unknown error.'))
-
-
-###
-# Compatibility functions
-
-def _total_seconds(td):
-    # Python 2.6 doesn't have a total_seconds() method on timedelta objects
-    return ((td.seconds + td.days * 86400) * 1000000 +
-            td.microseconds) // 1000000
-
-
-total_seconds = getattr(datetime.timedelta, 'total_seconds', _total_seconds)
 
 
 ###

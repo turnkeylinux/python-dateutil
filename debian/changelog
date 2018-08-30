@@ -1,3 +1,11 @@
+python-dateutil (2.7.3-1~1.gbp3f867c) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @3f867ca65d0de8fd481d28ba08bdbf5ee2076268 **
+
+  * New upstream version 2.7.3
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 30 Aug 2018 21:56:37 +0200
+
 python-dateutil (2.6.1-1) unstable; urgency=medium
 
   * [777d7bc] New upstream version 2.6.1
