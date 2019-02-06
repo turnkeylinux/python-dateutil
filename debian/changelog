@@ -1,3 +1,21 @@
+python-dateutil (2.7.3-3) unstable; urgency=medium
+
+  [ Antonio Terceiro ]
+  * Add necessary breaks.
+    Add breaks against reverse-dependencies that can't cope with the new
+    upstream version. (Closes: #907718)
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 06 Feb 2019 14:35:10 +0100
+
+python-dateutil (2.7.3-2) unstable; urgency=medium
+
+  [ Antonio Terceiro ]
+  * Add necessary breaks.
+    Add breaks against reverse-dependencies that can't cope with the new
+    upstream version. (Closes: #907718)
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 06 Feb 2019 14:35:02 +0100
+
 python-dateutil (2.7.3-1) unstable; urgency=medium
 
   * New upstream version 2.7.3 (Closes: #903478, #876038)
