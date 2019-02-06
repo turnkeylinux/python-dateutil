@@ -22,6 +22,8 @@ Package: python-dateutil
 Architecture: all
 Depends: ${python:Depends}, ${misc:Depends}, tzdata
 XB-Python-Version: ${python:Version}
+Breaks: python-icalendar (<< 4.0.3-2~),
+        python-vobject (<< 0.9.6.1-0.1~),
 Description: powerful extensions to the standard Python datetime module
  It features:
  .
@@ -45,6 +47,9 @@ Package: python3-dateutil
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends}, tzdata
 XB-Python-Version: ${python3:Version}
+Breaks: khal (<< 1:0.9.10-0.1~),
+        python3-icalendar (<< 4.0.3-2~),
+        python3-vobject (<< 0.9.6.1-0.1~),
 Description: powerful extensions to the standard Python 3 datetime module
  It features:
  .
