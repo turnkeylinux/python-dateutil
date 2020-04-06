@@ -6,31 +6,31 @@ Subject: Remove Zoneinfo Tarball
  MANIFEST.in                          | 1 +
  dateutil/test/test_tz.py             | 2 ++
  python_dateutil.egg-info/SOURCES.txt | 3 +--
- setup.py                             | 2 +-
- 4 files changed, 5 insertions(+), 3 deletions(-)
+ setup.cfg                            | 3 ---
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/MANIFEST.in b/MANIFEST.in
-index dd5142e..40d4e6b 100644
+index d4d9f32..3e8b3fb 100644
 --- a/MANIFEST.in
 +++ b/MANIFEST.in
-@@ -2,3 +2,4 @@ include LICENSE NEWS zonefile_metadata.json updatezinfo.py
+@@ -2,3 +2,4 @@ include LICENSE NEWS zonefile_metadata.json updatezinfo.py pyproject.toml
  recursive-include dateutil/test *
  global-exclude __pycache__
  global-exclude *.py[co]
 +exclude dateutil/zoneinfo/dateutil-zoneinfo.tar.gz
 diff --git a/dateutil/test/test_tz.py b/dateutil/test/test_tz.py
-index 54dfb1b..9b3806a 100644
+index 6cd8ea0..042f28e 100644
 --- a/dateutil/test/test_tz.py
 +++ b/dateutil/test/test_tz.py
-@@ -1048,6 +1048,7 @@ def test_gettz_cache_clear():
-     assert NYC1 is not NYC2
- 
+@@ -1184,6 +1184,7 @@ def test_gettz_weakref():
+     assert NYC_ref() is None    # Should have been pushed out
+     assert tz.gettz('America/New_York') is not NYC_ref()
  
 +@unittest.skip("No prepackaged zoneinfo tarball")
- class ZoneInfoGettzTest(GettzTest, WarningTestMixin):
+ class ZoneInfoGettzTest(GettzTest):
      def gettz(self, name):
          zoneinfo_file = zoneinfo.get_zonefile_instance()
-@@ -2226,6 +2227,7 @@ class TzPickleTest(PicklableMixin, unittest.TestCase):
+@@ -2408,6 +2409,7 @@ class TzPickleTest(PicklableMixin, unittest.TestCase):
      def testPickleTzGettz(self):
          self.assertPicklable(tz.gettz('America/New_York'))
  
@@ -39,10 +39,10 @@ index 54dfb1b..9b3806a 100644
          zoneinfo_file = zoneinfo.get_zonefile_instance()
          tzi = zoneinfo_file.get('America/New_York')
 diff --git a/python_dateutil.egg-info/SOURCES.txt b/python_dateutil.egg-info/SOURCES.txt
-index c967a94..79a4319 100644
+index c0d2a0f..ae4d43f 100644
 --- a/python_dateutil.egg-info/SOURCES.txt
 +++ b/python_dateutil.egg-info/SOURCES.txt
-@@ -54,7 +54,6 @@ dateutil/tz/_factories.py
+@@ -58,7 +58,6 @@ dateutil/tz/_factories.py
  dateutil/tz/tz.py
  dateutil/tz/win.py
  dateutil/zoneinfo/__init__.py
@@ -50,23 +50,24 @@ index c967a94..79a4319 100644
  dateutil/zoneinfo/rebuild.py
  docs/Makefile
  docs/changelog.rst
-@@ -76,4 +75,4 @@ python_dateutil.egg-info/SOURCES.txt
- python_dateutil.egg-info/dependency_links.txt
- python_dateutil.egg-info/requires.txt
+@@ -86,4 +85,4 @@ python_dateutil.egg-info/requires.txt
  python_dateutil.egg-info/top_level.txt
--python_dateutil.egg-info/zip-safe
+ python_dateutil.egg-info/zip-safe
+ requirements/3.3/constraints.txt
+-requirements/3.3/requirements-dev.txt
 \ No newline at end of file
-+python_dateutil.egg-info/zip-safe
-diff --git a/setup.py b/setup.py
-index b59bd63..b6452bc 100644
---- a/setup.py
-+++ b/setup.py
-@@ -60,7 +60,7 @@ setup(name="python-dateutil",
-       long_description_content_type='text/x-rst',
-       packages=PACKAGES,
-       python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",
--      package_data={"dateutil.zoneinfo": ["dateutil-zoneinfo.tar.gz"]},
-+      package_data={"dateutil.zoneinfo": []},
-       zip_safe=True,
-       requires=["six"],
-       setup_requires=['setuptools_scm'],
++requirements/3.3/requirements-dev.txt
+diff --git a/setup.cfg b/setup.cfg
+index a5fe172..330b7cb 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -41,9 +41,6 @@ test_suite = dateutil.test
+ exclude = 
+ 	dateutil.test
+ 
+-[options.package_data]
+-dateutil.zoneinfo = dateutil-zoneinfo.tar.gz
+-
+ [sdist]
+ formats = gztar
+ 
