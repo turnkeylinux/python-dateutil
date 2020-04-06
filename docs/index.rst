@@ -15,6 +15,8 @@ Contents:
 
    Overview <self>
    Changelog <changelog>
+   Examples <examples>
+   Exercises <exercises/index>
 
 .. toctree::
    :maxdepth: 2
@@ -24,9 +26,9 @@ Contents:
    relativedelta
    rrule
    tz
+   tz.win <tzwin>
    utils
    zoneinfo
-   examples
 
 Indices and tables
 ==================

@@ -3,8 +3,19 @@ rrule
 =====
 
 .. automodule:: dateutil.rrule
-   :members:
    :undoc-members:
+
+Classes
+-------
+
+.. autoclass:: rrule
+.. autoclass:: rruleset
+
+Functions
+---------
+
+.. autofunction:: rrulestr
+
 
 rrule examples
 --------------
@@ -309,7 +320,7 @@ Every 18 months on the 10th thru 15th of the month for 10 occurrences.
      datetime.datetime(1999, 3, 13, 9, 0)]
 
 
-Every Tuesday, every other month, 6 occurences.
+Every Tuesday, every other month, 6 occurrences.
 
 .. doctest:: rrule
    :options: +NORMALIZE_WHITESPACE

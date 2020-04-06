@@ -7,7 +7,7 @@ This document outlines the ways to contribute to `python-dateutil`. This is a fa
 ### Bug reports
 Bug reports are an important type of contribution - it's important to get feedback about how the library is failing, and there's no better way to do that than to hear about real-life failure cases. A good bug report will include:
 
-1. A minimal, reproducible example - a small, self-contained script that can reproduce the behavior is the best way to get your bug fixed. For more information and tips on how to structure these, read [StackOverflow's guide to creating a minimal, complete, verified example](https://stackoverflow.com/help/mcve).
+1. A minimal, reproducible example - a small, self-contained script that can reproduce the behavior is the best way to get your bug fixed. For more information and tips on how to structure these, read [Stack Overflow's guide to creating a minimal, complete, verified example](https://stackoverflow.com/help/mcve).
 
 2. The platform and versions of everything involved, at a minimum please include operating system, `python` version and `dateutil` version. Instructions on getting your versions:
     - `dateutil`: `python -c 'import dateutil; print(dateutil.__version__)'`
@@ -28,7 +28,7 @@ If you would like to fix something in `dateutil` -  improvements to documentatio
 The most important thing to include in your pull request are *tests* - please write one or more tests to cover the behavior you intend your patch to improve. Ideally, tests would use only the public interface - try to get 100% difference coverage using only supported behavior of the API.
 
 #### Changelog
-To keep users abreast of the changes to the module and to give proper credit, `dateutil` maintains a changelog, which is managed by [towncrier](https://github.com/hawkowl/towncrier). To add a changelog entry, make a new file called `<issue_no>.<type>.rst`, where `<issue_no>` is the number of the PR you've just made (it's easiest to add the changelog *after* you've created the PR so you'll have this number), and `<type>` is one of the following types:
+To keep users abreast of the changes to the module and to give proper credit, `dateutil` maintains a changelog, which is managed by [towncrier](https://github.com/hawkowl/towncrier). To add a changelog entry, make a new file called `<issue_no>.<type>.rst` in the `changelog.d` directory, where `<issue_no>` is the number of the PR you've just made (it's easiest to add the changelog *after* you've created the PR so you'll have this number), and `<type>` is one of the following types:
 
 - `feature`: A new feature, (e.g. a new function, method, attribute, etc)
 - `bugfix`: A fix to a bug
@@ -51,7 +51,7 @@ an invalid value for tzstr. Reported by @pganssle (gh issue #259). Fixed by
 @pablogsal (gh pr #581)
 ```
 
-For bugs reported and fixed by the same person use "Reported and fixed by @{patch submitter}". It is not necessary to create a github issue just for the purpose of mentioning it in the changelog, if the PR *is* the report, mentioning the PR is enough.
+For bugs reported and fixed by the same person use "Reported and fixed by @{patch submitter}". It is not necessary to create a GitHub issue just for the purpose of mentioning it in the changelog, if the PR *is* the report, mentioning the PR is enough.
 
 ## License
 
