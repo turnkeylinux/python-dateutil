@@ -6,7 +6,6 @@ Build-Depends: debhelper (>= 10~),
  dh-python,
  python-all (>= 2.6.6-3~),
  python-setuptools,
- python-setuptools-scm,
  python-six,
 Standards-Version: 4.0.0
 Vcs-Git: https://salsa.debian.org/agx/python-dateutil.git
