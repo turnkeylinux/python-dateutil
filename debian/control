@@ -3,8 +3,8 @@ Section: python
 Priority: optional
 Maintainer: Jeremy Davis <jeremy@turnkeylinux.org>
 Build-Depends: debhelper (>= 10~),
- dh-python,
- python2.7,
+ dh-python2 (>= 4.20201102+turnkey0),
+ python-all (>= 2.6.6-3~),
  python-setuptools,
  python-six,
 Standards-Version: 4.0.0
