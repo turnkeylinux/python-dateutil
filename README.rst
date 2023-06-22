@@ -1,6 +1,8 @@
 dateutil - powerful extensions to datetime
 ==========================================
 
+NOTE: This is a py2 fork for building on Debian Bookworm (tklbam dep)
+
 |pypi| |support| |licence|
 
 |gitter| |readthedocs|
